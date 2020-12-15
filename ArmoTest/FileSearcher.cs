@@ -16,13 +16,7 @@ namespace ArmoTest
         public bool IsSearchCanseled { get; set; }
 
         private int filesCount;
-        private int filesFound;
         private int filesProcessed;
-
-        private object lockObj = new object();
-
-
-
 
         List<IFilesDataReceiver> filesDataReceivers;
 
@@ -31,13 +25,6 @@ namespace ArmoTest
             filesDataReceivers = new List<IFilesDataReceiver>();
         }
 
-        private void AddFilesCount(int num)
-        {
-            lock (lockObj)
-            {
-                filesCount += num;
-            }
-        }
 
         public void Subscribe(IFilesDataReceiver filesDataReceiver)
         {
@@ -73,7 +60,6 @@ namespace ArmoTest
             IsSearchPaused = false;
             IsSearchCanseled = false;
             filesCount = 0;
-            filesFound = 0;
             filesProcessed = 0;
 
             await Task.Run(() => filesCount = CheckFilesCount(startDir));
@@ -156,7 +142,6 @@ namespace ArmoTest
 
                 fileInfos.ToList().ForEach(x =>
                 {
-                    filesFound++;
                     SendFileData(startDir, filesCount, filesProcessed);
                     SendFilePath(x);
                 });
