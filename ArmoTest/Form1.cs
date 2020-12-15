@@ -16,6 +16,9 @@ namespace ArmoTest
         FileSearcher fileSearcher;
         int filesFound;
 
+        int secondsLeft;
+
+
         public Form1()
         {
             InitializeComponent();
@@ -80,8 +83,6 @@ namespace ArmoTest
                 CurrentFileDataLabel.Text = $"{currentFileNum}/{filesCount} {currentDir}";
 
 
-                
-                FileProcessingProgressBar.Value = currentFileNum;
                 if (filesCount < currentFileNum)
                 {
                     FileProcessingProgressBar.Maximum = currentFileNum;
@@ -90,6 +91,8 @@ namespace ArmoTest
                 {
                     FileProcessingProgressBar.Maximum = filesCount;
                 }
+                FileProcessingProgressBar.Value = currentFileNum;
+                
                 
             }));
 
@@ -101,6 +104,7 @@ namespace ArmoTest
             {
                 fileSearcher.IsSearchPaused = false;
                 PauseSearchButton.Text = "Пауза";
+                timer1.Start();
 
                 TerminateSearchButton.Visible = false;
             }
@@ -108,6 +112,7 @@ namespace ArmoTest
             {
                 fileSearcher.IsSearchPaused = true;
                 PauseSearchButton.Text = "Продолжить";
+                timer1.Stop();
 
                 TerminateSearchButton.Visible = true;
             }
@@ -129,10 +134,15 @@ namespace ArmoTest
                 PauseSearchButton.Visible = true;
                 FileTreeView.Nodes.Clear();
 
+                timer1.Start();
+
                 await fileSearcher.StartSearchAsync(StartDirTextBox.Text, SearchPatternTextBox.Text);
 
                 PauseSearchButton.Visible = false;
                 StartSearchButton.Enabled = true;
+                timer1.Stop();
+                secondsLeft = 0;
+                timeLabel.Text = "";
             }
         }
 
@@ -154,6 +164,8 @@ namespace ArmoTest
             CurrentFileDataLabel.Text = "";
             FileProcessingProgressBar.Value = 0;
             StartSearchButton.Enabled = true;
+            timer1.Stop();
+            secondsLeft = 0;
 
             SetProcessingPanelToBeginState();
         }
@@ -180,6 +192,16 @@ namespace ArmoTest
             PauseSearchButton.Text = "Пауза";
 
             TerminateSearchButton.Visible = false;
+
+            timeLabel.Text = "";
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            secondsLeft++;
+            int minutesLeft = secondsLeft / 60;
+            int seconds = secondsLeft % 60;
+            timeLabel.Text = $"{minutesLeft}:{seconds}";
         }
     }
 }

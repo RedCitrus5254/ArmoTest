@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.FileTreeView = new ArmoTest.DoubleBufferedTreeView();
+            this.components = new System.ComponentModel.Container();
             this.FileProcessingProgressBar = new System.Windows.Forms.ProgressBar();
             this.CurrentFileDataLabel = new System.Windows.Forms.Label();
             this.StartDirLabel = new System.Windows.Forms.Label();
@@ -41,16 +41,11 @@
             this.TerminateSearchButton = new System.Windows.Forms.Button();
             this.ChoseDirButton = new System.Windows.Forms.Button();
             this.filesFoundLabel = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timeLabel = new System.Windows.Forms.Label();
+            this.FileTreeView = new ArmoTest.DoubleBufferedTreeView();
             this.ProcessingPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // FileTreeView
-            // 
-            this.FileTreeView.Dock = System.Windows.Forms.DockStyle.Left;
-            this.FileTreeView.Location = new System.Drawing.Point(0, 0);
-            this.FileTreeView.Name = "FileTreeView";
-            this.FileTreeView.Size = new System.Drawing.Size(315, 558);
-            this.FileTreeView.TabIndex = 0;
             // 
             // FileProcessingProgressBar
             // 
@@ -113,7 +108,7 @@
             // 
             // PauseSearchButton
             // 
-            this.PauseSearchButton.Location = new System.Drawing.Point(457, 32);
+            this.PauseSearchButton.Location = new System.Drawing.Point(502, 32);
             this.PauseSearchButton.Name = "PauseSearchButton";
             this.PauseSearchButton.Size = new System.Drawing.Size(75, 23);
             this.PauseSearchButton.TabIndex = 8;
@@ -123,19 +118,20 @@
             // 
             // ProcessingPanel
             // 
+            this.ProcessingPanel.Controls.Add(this.timeLabel);
             this.ProcessingPanel.Controls.Add(this.TerminateSearchButton);
             this.ProcessingPanel.Controls.Add(this.PauseSearchButton);
             this.ProcessingPanel.Controls.Add(this.CurrentFileDataLabel);
             this.ProcessingPanel.Controls.Add(this.FileProcessingProgressBar);
             this.ProcessingPanel.Location = new System.Drawing.Point(385, 491);
             this.ProcessingPanel.Name = "ProcessingPanel";
-            this.ProcessingPanel.Size = new System.Drawing.Size(544, 67);
+            this.ProcessingPanel.Size = new System.Drawing.Size(618, 67);
             this.ProcessingPanel.TabIndex = 9;
             this.ProcessingPanel.Visible = false;
             // 
             // TerminateSearchButton
             // 
-            this.TerminateSearchButton.Location = new System.Drawing.Point(458, 3);
+            this.TerminateSearchButton.Location = new System.Drawing.Point(502, 3);
             this.TerminateSearchButton.Name = "TerminateSearchButton";
             this.TerminateSearchButton.Size = new System.Drawing.Size(74, 23);
             this.TerminateSearchButton.TabIndex = 9;
@@ -161,6 +157,27 @@
             this.filesFoundLabel.Name = "filesFoundLabel";
             this.filesFoundLabel.Size = new System.Drawing.Size(0, 13);
             this.filesFoundLabel.TabIndex = 10;
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // timeLabel
+            // 
+            this.timeLabel.AutoSize = true;
+            this.timeLabel.Location = new System.Drawing.Point(454, 37);
+            this.timeLabel.Name = "timeLabel";
+            this.timeLabel.Size = new System.Drawing.Size(0, 13);
+            this.timeLabel.TabIndex = 10;
+            // 
+            // FileTreeView
+            // 
+            this.FileTreeView.Dock = System.Windows.Forms.DockStyle.Left;
+            this.FileTreeView.Location = new System.Drawing.Point(0, 0);
+            this.FileTreeView.Name = "FileTreeView";
+            this.FileTreeView.Size = new System.Drawing.Size(315, 558);
+            this.FileTreeView.TabIndex = 0;
             // 
             // Form1
             // 
@@ -200,6 +217,8 @@
         private System.Windows.Forms.Button ChoseDirButton;
         private System.Windows.Forms.Button TerminateSearchButton;
         private System.Windows.Forms.Label filesFoundLabel;
+        private System.Windows.Forms.Label timeLabel;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
